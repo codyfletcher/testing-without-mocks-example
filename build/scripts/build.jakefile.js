@@ -22,7 +22,7 @@ desc("Build, lint, and test");
 task("default", [ "clean", "quick" ]);
 
 desc("Quick build; only lint and test changed files");
-task("quick", [ "nodeVersion", "lint", "test" ]);
+task("quick", [ "lint", "test" ]);
 
 
 //*** LINT
@@ -92,8 +92,8 @@ function incrementalTask(taskName, taskDependencies, fileDependencies, action) {
 	var tasksDir = `${paths.incrementalDir}/tasks`;
 	var incrementalFile = `${tasksDir}/${taskName}.task`;
 
-	directory(tasksDir);
 	task(taskName, taskDependencies.concat(tasksDir, incrementalFile));
+	directory(tasksDir);
 	file(incrementalFile, fileDependencies, function() {
 		action(succeed, fail);
 	}, {async: true});
